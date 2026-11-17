@@ -1,0 +1,21 @@
+{
+  "name": "pulsevida-saude-conectada",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Plataforma acadêmica responsiva de acompanhamento em saúde, com áreas para pacientes, profissionais e administração.",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "migrate": "node scripts/migrate.js",
+    "check": "node --check server.js && node --check public/js/portal.js && node --check public/js/auth.js && node --check public/js/feedback.js && node --check public/js/site.js && node --check scripts/migrate.js"
+  },
+  "dependencies": {
+    "dotenv": "16.5.0",
+    "express": "5.1.0",
+    "mysql2": "3.14.3"
+  }
+}
