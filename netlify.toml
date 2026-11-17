@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://SEU-DOMINIO-EXATO-DA-VERCEL.vercel.app/api/:splat"
+  to = "https://praticas-extensionistas-v.vercel.app/api/:splat"
   status = 200
   force = true
 
