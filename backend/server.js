@@ -538,3 +538,14 @@ if (require.main === module) start().catch(async error => {
 });
 
 module.exports = { app, migrate, hashPassword, verifyPassword, pool, safeUser };
+
+// Apenas rode o listen localmente para testes:
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando localmente na porta ${PORT}`);
+  });
+}
+
+// Obrigatório para a Vercel processar as rotas:
+module.exports = app;
