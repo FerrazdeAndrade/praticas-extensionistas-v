@@ -257,10 +257,6 @@ app.patch('/api/me', authenticate, roles('paciente'), async (req, res, next) => 
   }
 });
 
-// ==========================================
-// ROTAS DE API DO PORTAL (Paciente / Médico / Admin)
-// ==========================================
-
 app.get('/api/metricas', authenticate, roles('paciente', 'medico'), async (req, res, next) => {
   try {
     const params = [];
@@ -307,7 +303,6 @@ app.get('/api/agendamentos', authenticate, roles('paciente', 'medico', 'administ
       p.nome AS paciente, CASE WHEN ? = 'medico' THEN p.email ELSE NULL END AS email_paciente
       FROM agendamentos a INNER JOIN usuarios p ON p.id = a.paciente_id
       LEFT JOIN usuarios m ON m.id = a.medico_id`;
-    
     const params = [req.user.tipo];
     let whereClause = '';
     if (isPatient) {
@@ -368,10 +363,6 @@ app.get('/api/usuarios', authenticate, roles('administrador'), async (_req, res,
   } catch (error) { next(error); }
 });
 
-// ==========================================
-// CRIAR ACESSO DE EQUIPE (ADMINISTRADOR)
-// ==========================================
-
 app.post('/api/usuarios/equipe', authenticate, roles('administrador'), async (req, res, next) => {
   try {
     const nome = clean(req.body?.nome, 120);
@@ -389,29 +380,17 @@ app.post('/api/usuarios/equipe', authenticate, roles('administrador'), async (re
     if (!['medico', 'administrador'].includes(tipo)) return fail(res, 400, 'Perfil de equipe inválido.');
 
     const senhaHash = await hashPassword(senha);
-
     const [result] = await pool.execute(
       `INSERT INTO usuarios (nome, usuario, email, senha_hash, tipo, especialidade, crm)
        VALUES (?, ?, ?, ?, ?, NULLIF(?, ''), NULLIF(?, ''))`,
       [nome, usuario, email, senhaHash, tipo, especialidade, crm]
     );
-
-    res.status(201).json({
-      sucesso: true,
-      id: Number(result.insertId),
-      mensagem: 'Acesso de equipe criado com sucesso.'
-    });
+    res.status(201).json({ sucesso: true, id: Number(result.insertId), mensagem: 'Acesso de equipe criado com sucesso.' });
   } catch (error) {
-    if (isDuplicate(error)) {
-      return fail(res, 409, 'Este usuário ou e-mail já está cadastrado.');
-    }
+    if (isDuplicate(error)) return fail(res, 409, 'Este usuário ou e-mail já está cadastrado.');
     next(error);
   }
 });
-
-// ==========================================
-// ROTAS DE ATENDIMENTOS
-// ==========================================
 
 app.get('/api/atendimentos', authenticate, roles('paciente', 'medico', 'administrador'), async (req, res, next) => {
   try {
@@ -449,41 +428,28 @@ app.post('/api/atendimentos', authenticate, roles('medico'), async (req, res, ne
   } catch (error) { next(error); }
 });
 
-// ==========================================
-// ROTAS DE API PARA O FEEDBACK / PESQUISAS (Corrigido para usar a tabela 'pesquisas')
-// ==========================================
-
 const handleSavePesquisa = async (req, res, next) => {
   try {
     const nome = clean(req.body?.nome, 100);
     const positivo = clean(req.body?.positivo, 2000);
     const negativo = clean(req.body?.negativo, 2000);
     const sugestoes = clean(req.body?.sugestoes, 2000);
-
     if (!positivo || positivo.length < 3 || !negativo || negativo.length < 3) {
       return fail(res, 400, 'Preencha os campos obrigatórios da avaliação.');
     }
-
     const [result] = await pool.execute(
       'INSERT INTO pesquisas (nome, positivo, negativo, sugestoes) VALUES (NULLIF(?, ""), ?, ?, NULLIF(?, ""))',
       [nome, positivo, negativo, sugestoes]
     );
-
     res.status(201).json({ sucesso: true, id: Number(result.insertId), mensagem: 'Avaliação enviada com sucesso!' });
-  } catch (error) {
-    next(error);
-  }
+  } catch (error) { next(error); }
 };
 
 const handleListPesquisa = async (_req, res, next) => {
   try {
-    const [rows] = await pool.execute(
-      'SELECT id, nome, positivo, negativo, sugestoes, criado_em FROM pesquisas ORDER BY criado_em DESC LIMIT 300'
-    );
+    const [rows] = await pool.execute('SELECT id, nome, positivo, negativo, sugestoes, criado_em FROM pesquisas ORDER BY criado_em DESC LIMIT 300');
     res.json(rows);
-  } catch (error) {
-    next(error);
-  }
+  } catch (error) { next(error); }
 };
 
 app.post('/api/pesquisas', handleSavePesquisa);
@@ -494,7 +460,6 @@ app.get('/api/pesquisas', authenticate, roles('administrador'), handleListPesqui
 app.get('/api/feedback', authenticate, roles('administrador'), handleListPesquisa);
 app.get('/api/feedbacks', authenticate, roles('administrador'), handleListPesquisa);
 
-// Rotas mapeadas para carregar o frontend na nova estrutura de pastas
 app.get('/portal/paciente', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
 app.get('/portal/profissional', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
 app.get('/portal/administracao', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
@@ -506,7 +471,6 @@ app.get(['/dados_feedback.html'], (_req, res) => res.sendFile(path.join(PUBLIC_D
 app.get(['/unidades', '/unidades.html'], (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'unidades.html')));
 app.get('/orientacoes', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'orientacoes.html')));
 
-// Servindo arquivos estáticos do frontend corretamente
 app.use(express.static(PUBLIC_DIR, { dotfiles: 'ignore', index: 'index.html', maxAge: 0, etag: true }));
 
 app.use('/api', (_req, res) => fail(res, 404, 'Rota da API não encontrada.'));
@@ -537,15 +501,4 @@ if (require.main === module) start().catch(async error => {
   process.exit(1);
 });
 
-module.exports = { app, migrate, hashPassword, verifyPassword, pool, safeUser };
-
-// Apenas rode o listen localmente para testes:
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Servidor rodando localmente na porta ${PORT}`);
-  });
-}
-
-// Obrigatório para a Vercel processar as rotas:
 module.exports = app;
