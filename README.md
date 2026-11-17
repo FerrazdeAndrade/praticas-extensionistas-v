@@ -60,3 +60,13 @@ Ajuste o nome do remote se já existir. Antes do push, confira `git status`, con
 ## Limites importantes
 
 Este é um protótipo acadêmico. Não foi submetido a validação clínica, certificação, avaliação de segurança independente ou processo de adequação regulatória/LGPD para operação real. Não armazene dados de saúde reais ou credenciais reais de pacientes. Os valores registrados não recebem diagnóstico nem recomendação médica automática. Para sintomas graves ou emergência, use os serviços oficiais de urgência, não aguarde retorno do site.
+
+# PulseVida — Saúde Conectada
+Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão de unidades de saúde em Saquarema.
+* **Frontend Estático (Netlify):** [praticas-extensionista-v.netlify.app](https://praticas-extensionista-v.netlify.app)
+* **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do sistema.
+* **Banco de Dados (MySQL Cloud):** Persistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
+* **Autenticação:** Sistema seguro com sessões baseadas em hash e senhas derivadas com scrypt.
+* **Perfis de Acesso:** Fluxos segregados para Pacientes, Profissionais de Saúde e Administradores.
+* **Repositório:** Código-fonte versionado e organizado sob padrões de desenvolvimento full-stack.
+* **Repositório Oficial:** Disponível no GitHub para consulta e contribuições acadêmicas.
