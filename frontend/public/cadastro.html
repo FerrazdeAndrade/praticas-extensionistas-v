@@ -1,0 +1,50 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142d4e">
+<title>Criar conta | PulseVida</title>
+<link rel="icon" href="/assets/logo_pulsevida.webp" type="image/webp">
+<link rel="stylesheet" href="/Css/site.css">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+<a class="auth-back" href="/">← Voltar ao PulseVida</a>
+<a class="brand auth-brand" href="/">
+<img src="/assets/logo_pulsevida.webp" alt="">
+<span><strong>PulseVida</strong><small>Cuidado conectado</small></span>
+</a>
+<h1>Crie sua conta de paciente</h1>
+<p class="auth-intro">Comece a organizar seu acompanhamento de saúde.</p>
+<div id="alert" class="alert" role="alert" aria-live="polite"></div>
+<form id="signupForm" class="form-grid">
+<div class="field full">
+<label for="nome">Nome completo</label>
+<input id="nome" name="nome" autocomplete="name" required maxlength="120">
+</div>
+<div class="field">
+<label for="usuario">Nome de usuário</label>
+<input id="usuario" name="usuario" autocomplete="username" required minlength="3" maxlength="48" pattern="[A-Za-z0-9._-]{3,48}" aria-describedby="usernameHint">
+<small id="usernameHint" class="record-meta">Use letras sem acento, números, ponto, hífen ou sublinhado.</small>
+</div>
+<div class="field">
+<label for="email">E-mail</label>
+<input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+</div>
+<div class="field full">
+<label for="senha">Senha (mínimo 10 caracteres)</label>
+<input id="senha" name="senha" type="password" autocomplete="new-password" required minlength="10" maxlength="128">
+</div>
+<div class="form-actions">
+<button id="submit" class="btn block" type="submit">Criar conta de paciente</button>
+</div>
+</form>
+<div class="notice">O cadastro aberto cria somente contas de paciente. Profissionais de saúde e administradores precisam de acesso autorizado.</div>
+<p class="auth-links">Já tem uma conta? <a href="/login">Entrar</a></p>
+<p class="disclaimer">Use dados fictícios neste ambiente de demonstração. Evite reutilizar senhas.</p>
+</main>
+<script src="/js/auth.js" defer></script>
+</body>
+</html>
