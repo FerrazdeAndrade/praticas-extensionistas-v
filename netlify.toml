@@ -1,5 +1,20 @@
+<<<<<<< HEAD
+=======
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+>>>>>>> aeed053bf9ba943811be77abb03dd6cc50a05acc
 [[redirects]]
   from = "/api/*"
   to = "https://praticas-extensionistas-v.vercel.app/api/:splat"
   status = 200
   force = true
+<<<<<<< HEAD
+=======
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+>>>>>>> aeed053bf9ba943811be77abb03dd6cc50a05acc

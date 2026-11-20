@@ -14,8 +14,14 @@
     "check": "node --check server.js && node --check public/js/portal.js && node --check public/js/auth.js && node --check public/js/feedback.js && node --check public/js/site.js && node --check scripts/migrate.js"
   },
   "dependencies": {
+<<<<<<< HEAD
     "dotenv": "^16.5.0",
     "express": "5.1.0",
     "mysql2": "^3.14.3"
+=======
+    "dotenv": "16.5.0",
+    "express": "5.1.0",
+    "mysql2": "3.14.3"
+>>>>>>> aeed053bf9ba943811be77abb03dd6cc50a05acc
   }
 }
