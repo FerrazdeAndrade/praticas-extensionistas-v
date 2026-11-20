@@ -1,10 +1,4 @@
 node_modules/
-<<<<<<< HEAD
-.env
-.env.*
-!.env.example
-*.log
-=======
 .pnpm-store/
 .env
 .env.*
@@ -15,4 +9,4 @@ pnpm-debug.log*
 Thumbs.db
 *.log
 coverage/
->>>>>>> aeed053bf9ba943811be77abb03dd6cc50a05acc
+
