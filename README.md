@@ -14,7 +14,6 @@ Site acadêmico responsivo para organizar o acompanhamento de pacientes e os flu
 A interface se reorganiza para telas pequenas, com navegação compacta, formulários de toque e tabelas com rolagem horizontal. Trata-se de um site web responsivo, não de um aplicativo nativo de loja.
 
 ## Iniciar no Preview do projeto
-
 O projeto já está configurado para Node.js na porta 3000, com servidor e banco gerenciado. A conexão `DATABASE_URL` é injetada pelo ambiente Webdev; o código nunca a envia ao navegador. Ao iniciar, o servidor aplica somente as migrações pendentes registradas em `schema_migrations`, cria o primeiro administrador se ainda não houver um e inicia o listener. O healthcheck sem autenticação é `GET /healthz`.
 
 O login inicial do administrador é `admin`. A senha é a que foi informada na caixa protegida de configuração do projeto; ela não está escrita neste README nem no código. Após o primeiro boot bem-sucedido, remova a variável protegida `PULSE_BOOTSTRAP_ADMIN_PASSWORD` no painel de configuração. As contas profissionais seguintes devem ser criadas dentro da área administrativa.
@@ -138,6 +137,7 @@ Ajuste o nome do remote se já existir. Antes do push, confira `git status`, con
 
 Este é um protótipo acadêmico. Não foi submetido a validação clínica, certificação, avaliação de segurança independente ou processo de adequação regulatória/LGPD para operação real. Não armazene dados de saúde reais ou credenciais reais de pacientes. Os valores registrados não recebem diagnóstico nem recomendação médica automática. Para sintomas graves ou emergência, use os serviços oficiais de urgência, não aguarde retorno do site.
 
+<<<<<<< HEAD
 # PulseVida — Saúde Conectada
 Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão de unidades de saúde em Saquarema.
 <<<<<<< HEAD
@@ -185,11 +185,19 @@ Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão d
 
  SPersistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
 
+=======
+## #### PulseVida — Saúde Conectada
+Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão de unidades de saúde em Saquarema.
+* **Frontend Estático (Netlify):** [praticas-extensionista-v.netlify.app](https://praticas-extensionista-v.netlify.app)
+* **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do sistema.
+* **Banco de Dados (MySQL Cloud):** Persistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
+>>>>>>> marsol/main
 * **Autenticação:** Sistema seguro com sessões baseadas em hash e senhas derivadas com scrypt.
 * **Perfis de Acesso:** Fluxos segregados para Pacientes, Profissionais de Saúde e Administradores.
 * **Repositório:** Código-fonte versionado e organizado sob padrões de desenvolvimento full-stack.
 * **Repositório Oficial:** Disponível no GitHub para consulta e contribuições acadêmicas.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 * praticas-extensionistas-v.vercel.app
 =======
@@ -215,3 +223,5 @@ Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão d
 - **Codificação no PowerShell:** execute `chcp 65001` e `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` no PowerShell **antes** de abrir o `mysql.exe` (nunca dentro do prompt `mysql>`), e passe `--default-character-set=utf8mb4` na conexão.
 - **Consultas legíveis e ASCII:** evite `SELECT *` em tabelas com hashes longos (`senha_hash`); para saída apenas em ASCII sem estourar o terminal, use `CAST(coluna AS CHAR CHARACTER SET ascii)` ou saída vertical `\G`.
 
+=======
+>>>>>>> marsol/main
