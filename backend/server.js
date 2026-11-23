@@ -314,6 +314,50 @@ app.get('/api/agendamentos', authenticate, roles('paciente', 'medico', 'administ
   } catch (error) { next(error); }
 });
 
+app.get('/api/medico/fila', authenticate, roles('medico', 'administrador'), async (req, res, next) => {
+  try {
+    const isMedico = req.user.tipo === 'medico';
+    const whereClause = isMedico
+      ? 'WHERE a.medico_id = ? OR a.medico_id IS NULL OR LOWER(COALESCE(a.medico_solicitado, \'\')) = LOWER(?)'
+      : '';
+    const params = isMedico ? [req.user.id, req.user.nome] : [];
+
+    const [rows] = await pool.execute(
+      `SELECT
+        a.id AS agendamento_id,
+        p.nome AS nome_paciente,
+        COALESCE(
+          (
+            SELECT CONCAT(
+              'PA: ', m.sistolica, '/', m.diastolica, ' mmHg | ',
+              'FC: ', m.batimento, ' bpm (', m.status, ')'
+            )
+            FROM metricas_usuario m
+            WHERE m.usuario_id = p.id
+            ORDER BY m.registrado_em DESC
+            LIMIT 1
+          ),
+          'Sem aferições registradas'
+        ) AS metricas_paciente,
+        COALESCE(med.nome, a.medico_solicitado, CASE WHEN ? = 'medico' THEN ? ELSE 'A definir' END) AS nome_medico,
+        COALESCE(med.especialidade, a.especialidade) AS especialidade_do_medico,
+        COALESCE(med.crm, 'Não informado') AS CRM,
+        TIME_FORMAT(a.horario, '%H:%i') AS horario_consulta,
+        DATE_FORMAT(a.data, '%d/%m/%Y') AS data_consulta,
+        a.status
+      FROM agendamentos a
+      INNER JOIN usuarios p ON p.id = a.paciente_id
+      LEFT JOIN usuarios med ON med.id = a.medico_id
+      ${whereClause}
+      ORDER BY a.data ASC, a.horario ASC
+      LIMIT 300`,
+      [req.user.tipo, req.user.nome, ...params]
+    );
+
+    res.json({ fila: rows });
+  } catch (error) { next(error); }
+});
+
 app.post('/api/agendamentos', authenticate, roles('paciente'), async (req, res, next) => {
   try {
     const especialidade = clean(req.body?.especialidade, 100);
@@ -392,6 +436,63 @@ app.post('/api/usuarios/equipe', authenticate, roles('administrador'), async (re
   }
 });
 
+// Listar todos os usuários (área administrativa)
+app.get('/api/admin/usuarios', authenticate, roles('administrador'), async (_req, res, next) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT id, nome, usuario, email, tipo, especialidade, crm, ativo,
+             DATE_FORMAT(criado_em, '%d/%m/%Y %H:%i') AS criado_em
+      FROM usuarios
+      ORDER BY id ASC
+    `);
+    res.json({ usuarios: rows });
+  } catch (error) { next(error); }
+});
+
+// Atualizar perfil, especialidade, CRM ou status ativo de um usuário
+app.patch('/api/admin/usuarios/:id', authenticate, roles('administrador'), async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const { tipo, especialidade, crm, ativo } = req.body || {};
+    const tiposValidos = ['paciente', 'medico', 'administrador'];
+
+    if (!id || !tiposValidos.includes(tipo)) {
+      return res.status(400).json({ mensagem: 'Dados inválidos para atualização do usuário.' });
+    }
+
+    await pool.query(
+      `UPDATE usuarios
+       SET tipo = ?,
+           especialidade = ?,
+           crm = ?,
+           ativo = ?
+       WHERE id = ?`,
+      [
+        tipo,
+        tipo === 'medico' ? (clean(especialidade, 100) || null) : null,
+        tipo === 'medico' ? (clean(crm, 30) || null) : null,
+        ativo ? 1 : 0,
+        id
+      ]
+    );
+
+    res.json({ mensagem: 'Usuário atualizado com sucesso.' });
+  } catch (error) { next(error); }
+});
+
+// Listar pesquisas de satisfação (área administrativa)
+app.get('/api/admin/pesquisas', authenticate, roles('administrador'), async (_req, res, next) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT id, nome, positivo, negativo, sugestoes,
+             DATE_FORMAT(criado_em, '%d/%m/%Y %H:%i') AS criado_em
+      FROM pesquisas
+      ORDER BY id DESC
+    `);
+    res.json({ pesquisas: rows });
+  } catch (error) { next(error); }
+});
+
 app.get('/api/atendimentos', authenticate, roles('paciente', 'medico', 'administrador'), async (req, res, next) => {
   try {
     const isPatient = req.user.tipo === 'paciente';
@@ -461,8 +562,24 @@ app.get('/api/feedback', authenticate, roles('administrador'), handleListPesquis
 app.get('/api/feedbacks', authenticate, roles('administrador'), handleListPesquisa);
 
 app.get('/portal/paciente', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
-app.get('/portal/profissional', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
-app.get('/portal/administracao', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
+app.get('/portal/medico', (_req, res) => {
+  const medicoHtml = path.join(PUBLIC_DIR, 'portal_medico.html');
+  const fallbackHtml = path.join(PUBLIC_DIR, 'portal.html');
+  const target = fs.existsSync(medicoHtml) ? medicoHtml : fallbackHtml;
+
+  res.sendFile(target, (error) => {
+    if (error && !res.headersSent) {
+      res.status(404).type('text').send('Página do portal do médico não encontrada.');
+    }
+  });
+});
+app.get('/portal/profissional', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal_medico.html')));
+// Servir a página HTML da área administrativa (com fallback para portal.html se portal_admin.html ainda não existir)
+app.get('/portal/administracao', (_req, res) => {
+  const adminHtml = path.join(PUBLIC_DIR, 'portal_admin.html');
+  const fallbackHtml = path.join(PUBLIC_DIR, 'portal.html');
+  res.sendFile(fs.existsSync(adminHtml) ? adminHtml : fallbackHtml);
+});
 app.get('/portal.html', (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'portal.html')));
 app.get(['/login', '/login.html'], (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'login.html')));
 app.get(['/cadastro', '/cadastro.html'], (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'cadastro.html')));

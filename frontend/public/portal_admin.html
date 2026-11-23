@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#142d4e">
+  <title>Área Administrativa | PulseVida</title>
+  <link rel="icon" href="/assets/logo_pulsevida.webp" type="image/webp">
+  <link rel="stylesheet" href="/Css/site.css">
+</head>
+<body>
+  <header class="topnav">
+    <a class="brand" href="/">
+      <img src="/assets/logo_pulsevida.webp" alt="">
+      <span><strong>PulseVida</strong><small>Área Administrativa</small></span>
+    </a>
+    <nav class="toplinks">
+      <a href="#secUsuarios">Usuários e Perfis</a>
+      <a href="#secPesquisas">Pesquisas</a>
+    </nav>
+    <div class="nav-actions">
+      <span id="infoAdmin" style="font-size:.9rem;color:#4b6079;margin-right:10px;"></span>
+      <button class="btn ghost" id="btnSair" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main class="container public-section">
+    <div id="alertAdmin" class="alert" role="alert" aria-live="polite"></div>
+
+    <section id="secUsuarios" style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 8px 24px rgba(20,45,78,.08);margin-bottom:24px;overflow-x:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div>
+          <div class="eyebrow">Gestão de Acessos</div>
+          <h1 style="margin:4px 0;color:var(--navy);">Usuários cadastrados</h1>
+        </div>
+        <button class="btn secondary" id="btnAtualizarAdmin" type="button">Atualizar</button>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;font-size:.92rem;">
+        <thead>
+          <tr style="background:#f5f8fc;text-align:left;">
+            <th style="padding:10px;">ID</th>
+            <th style="padding:10px;">Nome / Usuário</th>
+            <th style="padding:10px;">Perfil</th>
+            <th style="padding:10px;">Especialidade (Médico)</th>
+            <th style="padding:10px;">CRM</th>
+            <th style="padding:10px;">Ativo</th>
+            <th style="padding:10px;">Ação</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaUsuariosAdmin">
+          <tr><td colspan="7" style="padding:12px;">Carregando usuários…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="secPesquisas" style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 8px 24px rgba(20,45,78,.08);overflow-x:auto;">
+      <div class="eyebrow">Avaliação do Sistema</div>
+      <h2 style="margin:4px 0 14px;color:var(--navy);">Respostas da pesquisa de satisfação</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:.92rem;">
+        <thead>
+          <tr style="background:#f5f8fc;text-align:left;">
+            <th style="padding:10px;">Nome</th>
+            <th style="padding:10px;">Pontos positivos</th>
+            <th style="padding:10px;">Pontos negativos</th>
+            <th style="padding:10px;">Sugestões</th>
+            <th style="padding:10px;">Data</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaPesquisasAdmin">
+          <tr><td colspan="5" style="padding:12px;">Carregando pesquisas…</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="/js/portal_admin.js" defer></script>
+</body>
+</html>

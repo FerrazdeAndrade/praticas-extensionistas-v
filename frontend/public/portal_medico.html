@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#142d4e">
+  <meta name="description" content="PulseVida — Portal do Médico: fila de pacientes, métricas clínicas e agenda de consultas.">
+  <title>PulseVida — Portal do Médico</title>
+  <link rel="icon" href="/assets/logo_pulsevida.webp" type="image/webp">
+  <link rel="stylesheet" href="/Css/site.css">
+  <style>
+    .medico-header-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 8px 24px rgba(20, 45, 78, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .tabela-wrap {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(20, 45, 78, 0.08);
+      overflow-x: auto;
+    }
+    .fila-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    .fila-table th, .fila-table td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid #e6edf5;
+    }
+    .fila-table th {
+      color: var(--navy, #142d4e);
+      font-weight: 700;
+      background: #f5f8fc;
+    }
+    .badge-metrica {
+      display: inline-block;
+      background: #eef5ff;
+      color: #142d4e;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <a class="brand" href="/" aria-label="PulseVida, página inicial">
+      <img src="/assets/logo_pulsevida.webp" alt="">
+      <span><strong>PulseVida</strong><small>Portal do Médico</small></span>
+    </a>
+    <nav class="toplinks" aria-label="Navegação do médico">
+      <a href="/portal/medico">Fila de Atendimento</a>
+      <a href="/unidades">Unidades de saúde</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn ghost" id="btnSair" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main class="container public-section">
+    <div class="medico-header-card">
+      <div>
+        <div class="eyebrow">Área Profissional</div>
+        <h1 style="margin: 4px 0; color: var(--navy, #142d4e);">Pacientes Agendados</h1>
+        <p id="infoMedico" style="margin: 0; color: #4b6079;">Carregando dados do profissional...</p>
+      </div>
+      <div>
+        <button class="btn secondary" id="btnAtualizar" type="button">Atualizar lista</button>
+      </div>
+    </div>
+
+    <div class="tabela-wrap">
+      <table class="fila-table">
+        <thead>
+          <tr>
+            <th>Nome do Paciente</th>
+            <th>Métricas do Paciente</th>
+            <th>Médico Responsável</th>
+            <th>Especialidade</th>
+            <th>CRM</th>
+            <th>Data</th>
+            <th>Horário</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaPacientes">
+          <tr>
+            <td colspan="7">Carregando fila de atendimento...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>
+        <a class="brand" href="/" style="color:white">
+          <img src="/assets/logo_pulsevida.webp" alt="">
+          <span><strong style="color:white">PulseVida</strong><small style="color:#b7c9d9">Cuidado conectado</small></span>
+        </a>
+        <p>Projeto acadêmico de acompanhamento em saúde · Saquarema, RJ</p>
+      </div>
+      <div>
+        <p>Área restrita a profissionais de saúde autorizados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/portal_medico.js" defer></script>
+</body>
+</html>

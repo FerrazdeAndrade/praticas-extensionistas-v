@@ -1,6 +1,7 @@
 -- PulseVida: esquema inicial MySQL, idempotente e compatível com o domínio do projeto original.
 -- O banco gerenciado do projeto é compartilhado entre Preview e produção: não apagar tabelas existentes.
 
+
 CREATE DATABASE IF NOT EXISTS pulsevida
   DEFAULT CHARACTER SET utf8mb4
   DEFAULT COLLATE utf8mb4_unicode_ci;
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   cpf VARCHAR(20) NULL,
   sus VARCHAR(30) NULL,
   especialidade VARCHAR(100) NULL,
-  crm VARCHAR(30) NULL,
+  crm VARCHAR(30),
   ativo TINYINT(1) NOT NULL DEFAULT 1,
   criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -92,3 +93,4 @@ CREATE TABLE IF NOT EXISTS pesquisas (
   criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY idx_pesquisas_data (criado_em)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

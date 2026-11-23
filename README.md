@@ -34,6 +34,83 @@ pnpm start
 ```http://localhost:3000
 
 Abra ``. A aplicação executa as migrações versionadas automaticamente no início. O comando `pnpm migrate` executa apenas as migrações e fecha a conexão. Nunca coloque a senha de administrador ou credenciais de banco em `README.md`, `package.json`, imagens, comandos salvos, frontend ou no GitHub; `.env` está ignorado pelo Git.
+==========
+## Execução e Banco de Dados — MySQL Local (Porta 3306)
+
+### 1. Instalar dependências e iniciar o servidor (porta `3000`)
+
+Na raiz do projeto:
+
+```powershell
+pnpm install --frozen-lockfile
+```
+
+Em seguida, acesse a pasta `backend` e inicie a aplicação:
+
+```powershell
+cd backend
+pnpm start
+```
+
+Após iniciar, a aplicação fica disponível em:
+
+```text
+http://localhost:3000
+```
+
+### 2. Conectar ao MySQL local (porta `3306`) e conferir os dados
+
+Abra o MySQL local na porta `3306` (ou pelo terminal passando `-P 3306`), informe a senha configurada e execute:
+
+```powershell
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -h 127.0.0.1 -P 3306 -u root -D pulsevida --default-character-set=utf8mb4 -p
+```
+
+Dentro do MySQL:
+
+```sql
+USE pulsevida;
+SHOW TABLES;
+SELECT
+  id,
+  nome,
+  usuario,
+  email,
+  tipo,
+  especialidade,
+  crm,
+  ativo,
+  DATE_FORMAT(criado_em, '%d/%m/%Y %H:%i') AS data_horario
+FROM usuarios
+ORDER BY id;
+```
+
+### 3. Padronizar perfis médicos, especialidade e CRM
+
+Se os campos `tipo`, `especialidade` ou `crm` ainda não estiverem preenchidos nas contas médicas, execute:
+
+```sql
+UPDATE usuarios
+SET tipo = 'medico',
+    especialidade = COALESCE(NULLIF(especialidade, ''), 'Cardiologia'),
+    crm = COALESCE(NULLIF(crm, ''), 'CRM-RJ 528491')
+WHERE usuario = 'pedrosa';
+
+UPDATE usuarios
+SET tipo = 'medico',
+    especialidade = COALESCE(NULLIF(especialidade, ''), 'Clínica Médica'),
+    crm = COALESCE(NULLIF(crm, ''), 'CRM-RJ 529104')
+WHERE usuario = 'severo';
+
+
+UPDATE usuarios
+SET tipo = 'medico',
+    especialidade = COALESCE(NULLIF(especialidade, ''), 'Clínica Geral'),
+    crm = COALESCE(NULLIF(crm, ''), 'CRM-RJ 530112')
+WHERE usuario = 'pedro' OR id = 30001;
+```
+
+==========
 
 ## Banco e segurança
 
@@ -63,12 +140,78 @@ Este é um protótipo acadêmico. Não foi submetido a validação clínica, cer
 
 # PulseVida — Saúde Conectada
 Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão de unidades de saúde em Saquarema.
+<<<<<<< HEAD
 
 * **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do (praticas-extensionistas-v.vercel.app)
 * **Banco de Dados (MySQL Cloud):** Persistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
+=======
+* **Frontend Estático (Netlify):** 
+# (praticas-extensionistas-v.vercel.app) 
+* **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do sistema.
+* **Banco de Dados (MySQL TiDBSCloud):**
+=========
+## 1__Comando no PowerShell (entrar no TiDB Cloud).
+# & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -h gateway01.sa-east-1.prod.aws.tidbcloud.com -P 4000 -u 2J1akc6etHw1hsG.root -pNqbYLzxvKszl8o9W -D pulsevida --ssl-mode=REQUIRED
+
+--PASSWORD: NqbYLzxvKszl8o9W
+============
+## 2__Comando dentro do cliente MySQL (selecionar/garantir o banco pulsevida).
+# CREATE DATABASE IF NOT EXISTS pulsevida CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+# USE pulsevida;
+=================
+## Listar todas as tabelas do banco pulsevid.
+# SHOW TABLES;
+
+## Conferir os dados salvos nas tabelas.
+# SELECT * FROM usuarios;
+# SELECT * FROM agendamentos;
+# SELECT * FROM metricas_usuario;
+# SELECT * FROM atendimentos;
+
+##| SELECT id, nome, usuario, tipo, especialidade, crm, ativo, criado_em
+    FROM usuarios
+    ORDER BY id; |
+# SELECT
+    id,
+    nome,
+    usuario,
+    tipo,
+    especialidade,
+    crm,
+    ativo,
+    DATE_FORMAT(criado_em, '%d/%m/%Y %H:%i') AS data_horario
+  FROM usuarios
+  ORDER BY id;
+
+ SPersistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
+
 * **Autenticação:** Sistema seguro com sessões baseadas em hash e senhas derivadas com scrypt.
 * **Perfis de Acesso:** Fluxos segregados para Pacientes, Profissionais de Saúde e Administradores.
 * **Repositório:** Código-fonte versionado e organizado sob padrões de desenvolvimento full-stack.
 * **Repositório Oficial:** Disponível no GitHub para consulta e contribuições acadêmicas.
 
+<<<<<<< HEAD
 * praticas-extensionistas-v.vercel.app
+=======
+====================================
+## Atualizações recentes: Portal Médico, Área Administrativa e Banco (TiDB Cloud)
+
+### 1. Contas médicas e perfil administrativo
+- **Profissionais de saúde (`tipo = 'medico'`):** contas configuradas com `especialidade` e `crm` (ex.: `pedro` / Dr. Pedro Paulo e `almeida` / Dra. Simone Almeida Couto, `CRM-RJ 530420`).
+- **Conta administrativa (`tipo = 'administrador'`):** conta `admin` (`admin@admin.com`) promovida ao perfil `administrador` para gerenciamento de acessos e visualização de dados administrativos, separada do fluxo de `paciente`.
+
+### 2. Fluxo entre Agendamentos, Área do Médico e Atendimentos do Paciente
+- **Fila e confirmação de consultas:** agendamentos confirmados (`status = 'Confirmado'`) e solicitações pendentes são exibidos na Área Profissional (`/portal/profissional` e `/portal/medico`) via `GET /api/medico/fila`, trazendo os dados do paciente e a última aferição de `metricas_usuario`.
+- **Registro de atendimentos (`atendimentos`):** ao registrar um atendimento clínico (`POST /api/atendimentos`), o backend grava o registro na tabela `atendimentos` (`agendamento_id`, `paciente_id`, `profissional_id`, `pressao`, `observacoes`) e atualiza o agendamento para `'Atendido'`, permitindo que os atendimentos apareçam na tela do médico e na área do paciente (`GET /api/atendimentos`).
+
+### 3. Novas rotas administrativas no backend (`backend/server.js`)
+- `GET /portal/administracao`: serve a interface administrativa (utilizando `portal_admin.html` quando presente, com fallback para `portal.html`).
+- `GET /api/admin/usuarios`: lista usuários cadastrados para gestão administrativa (protegida por `authenticate` e `roles('administrador')`).
+- `PATCH /api/admin/usuarios/:id`: atualiza `tipo`, `especialidade`, `crm` e `ativo` de um usuário (limpando `especialidade` e `crm` quando o perfil não for `medico`).
+- `GET /api/admin/pesquisas`: consulta as respostas da tabela `pesquisas` para o perfil `administrador`.
+
+### 4. Boas práticas de terminal e banco de dados (PowerShell + TiDB Cloud)
+- **Ambientes distintos:** o **TiDB Cloud** roda na porta `4000` (`gateway01.sa-east-1.prod.aws.tidbcloud.com`) com `--ssl-mode=REQUIRED`, enquanto o **MySQL local** roda em `127.0.0.1:3306` com sua senha local do `root`.
+- **Codificação no PowerShell:** execute `chcp 65001` e `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` no PowerShell **antes** de abrir o `mysql.exe` (nunca dentro do prompt `mysql>`), e passe `--default-character-set=utf8mb4` na conexão.
+- **Consultas legíveis e ASCII:** evite `SELECT *` em tabelas com hashes longos (`senha_hash`); para saída apenas em ASCII sem estourar o terminal, use `CAST(coluna AS CHAR CHARACTER SET ascii)` ou saída vertical `\G`.
+
