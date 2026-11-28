@@ -50,7 +50,13 @@
       </div>
 
       <div id="footerQrBox" class="footer-qr" aria-label="QR Code de acesso ao PulseVida">
-        <div id="pulseQrCode"></div>
+        <img
+          src="/assets/qrcode_pulse_vida.png"
+          width="84"
+          height="84"
+          alt="QR Code para acessar o PulseVida pelo celular"
+          style="display:block;width:84px;height:84px;object-fit:contain;background:#ffffff;"
+        >
         <span>Acesse pelo celular</span>
       </div>
 
@@ -60,35 +66,7 @@
       </div>
     </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
-  <script defer>
-    window.addEventListener('DOMContentLoaded', () => {
-      const target = document.getElementById('pulseQrCode');
-      if (!target) return;
-      const appUrl = window.location.origin || 'https://praticas-extensionistas-v.vercel.app';
-      target.innerHTML = '';
 
-      if (typeof QRCode !== 'undefined') {
-        new QRCode(target, {
-          text: appUrl,
-          width: 84,
-          height: 84,
-          colorDark: '#142d4e',
-          colorLight: '#ffffff',
-          correctLevel: QRCode.CorrectLevel.M
-        });
-        return;
-      }
-
-      const img = document.createElement('img');
-      img.width = 84;
-      img.height = 84;
-      img.alt = 'QR Code para acessar o PulseVida';
-      img.style.display = 'block';
-      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=84x84&data=${encodeURIComponent(appUrl)}`;
-      target.appendChild(img);
-    });
-  </script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>
