@@ -14,10 +14,7 @@ Site acadêmico responsivo para organizar o acompanhamento de pacientes e os flu
 A interface se reorganiza para telas pequenas, com navegação compacta, formulários de toque e tabelas com rolagem horizontal. Trata-se de um site web responsivo, não de um aplicativo nativo de loja.
 
 ## Iniciar no Preview do projeto
-<<<<<<< HEAD
 
-=======
->>>>>>> 0661d751b750162f7c6ce9b13ca08381ff0186a0
 O projeto já está configurado para Node.js na porta 3000, com servidor e banco gerenciado. A conexão `DATABASE_URL` é injetada pelo ambiente Webdev; o código nunca a envia ao navegador. Ao iniciar, o servidor aplica somente as migrações pendentes registradas em `schema_migrations`, cria o primeiro administrador se ainda não houver um e inicia o listener. O healthcheck sem autenticação é `GET /healthz`.
 
 O login inicial do administrador é `admin`. A senha é a que foi informada na caixa protegida de configuração do projeto; ela não está escrita neste README nem no código. Após o primeiro boot bem-sucedido, remova a variável protegida `PULSE_BOOTSTRAP_ADMIN_PASSWORD` no painel de configuração. As contas profissionais seguintes devem ser criadas dentro da área administrativa.
@@ -37,7 +34,6 @@ pnpm start
 ```http://localhost:3000
 
 Abra ``. A aplicação executa as migrações versionadas automaticamente no início. O comando `pnpm migrate` executa apenas as migrações e fecha a conexão. Nunca coloque a senha de administrador ou credenciais de banco em `README.md`, `package.json`, imagens, comandos salvos, frontend ou no GitHub; `.env` está ignorado pelo Git.
-==========
 ## Execução e Banco de Dados — MySQL Local (Porta 3306)
 
 ### 1. Instalar dependências e iniciar o servidor (porta `3000`)
@@ -113,7 +109,6 @@ SET tipo = 'medico',
 WHERE usuario = 'pedro' OR id = 30001;
 ```
 
-==========
 
 ## Banco e segurança
 
@@ -141,31 +136,22 @@ Ajuste o nome do remote se já existir. Antes do push, confira `git status`, con
 
 Este é um protótipo acadêmico. Não foi submetido a validação clínica, certificação, avaliação de segurança independente ou processo de adequação regulatória/LGPD para operação real. Não armazene dados de saúde reais ou credenciais reais de pacientes. Os valores registrados não recebem diagnóstico nem recomendação médica automática. Para sintomas graves ou emergência, use os serviços oficiais de urgência, não aguarde retorno do site.
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 0661d751b750162f7c6ce9b13ca08381ff0186a0
 # PulseVida — Saúde Conectada
 Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão de unidades de saúde em Saquarema.
-<<<<<<< HEAD
 
 * **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do (praticas-extensionistas-v.vercel.app)
 * **Banco de Dados (MySQL Cloud):** Persistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
-=======
 * **Frontend Estático (Netlify):** 
 # (praticas-extensionistas-v.vercel.app) 
 * **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do sistema.
 * **Banco de Dados (MySQL TiDBSCloud):**
-=========
 ## 1__Comando no PowerShell (entrar no TiDB Cloud).
 # & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -h gateway01.sa-east-1.prod.aws.tidbcloud.com -P 4000 -u 2J1akc6etHw1hsG.root -pNqbYLzxvKszl8o9W -D pulsevida --ssl-mode=REQUIRED
 
 --PASSWORD: NqbYLzxvKszl8o9W
-============
 ## 2__Comando dentro do cliente MySQL (selecionar/garantir o banco pulsevida).
 # CREATE DATABASE IF NOT EXISTS pulsevida CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 # USE pulsevida;
-=================
 ## Listar todas as tabelas do banco pulsevid.
 # SHOW TABLES;
 
@@ -192,34 +178,20 @@ Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão d
 
  SPersistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
 
-<<<<<<< HEAD
-=======
-=======
 ## #### PulseVida — Saúde Conectada
 Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão de unidades de saúde em Saquarema.
 * **Frontend Estático (Netlify):** [praticas-extensionista-v.netlify.app](https://praticas-extensionista-v.netlify.app)
 * **Backend API (Vercel):** Hospedagem serverless dedicada para os serviços Express e rotas do sistema.
 * **Banco de Dados (MySQL Cloud):** Persistência relacional em nuvem gerenciando usuários, agendamentos e métricas.
->>>>>>> marsol/main
->>>>>>> 0661d751b750162f7c6ce9b13ca08381ff0186a0
 * **Autenticação:** Sistema seguro com sessões baseadas em hash e senhas derivadas com scrypt.
 * **Perfis de Acesso:** Fluxos segregados para Pacientes, Profissionais de Saúde e Administradores.
 * **Repositório:** Código-fonte versionado e organizado sob padrões de desenvolvimento full-stack.
 * **Repositório Oficial:** Disponível no GitHub para consulta e contribuições acadêmicas.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 * praticas-extensionistas-v.vercel.app
-=======
-====================================
 
 ### 5. Refinamento (Semana 6) 
-=======
-<<<<<<< HEAD
 * praticas-extensionistas-v.vercel.app
-=======
-====================================
->>>>>>> 0661d751b750162f7c6ce9b13ca08381ff0186a0
 ## Atualizações recentes: Portal Médico, Área Administrativa e Banco (TiDB Cloud)
 
 ### 1. Contas médicas e perfil administrativo
@@ -241,7 +213,6 @@ Plataforma web acadêmica responsiva para monitoramento de pacientes e gestão d
 - **Codificação no PowerShell:** execute `chcp 65001` e `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` no PowerShell **antes** de abrir o `mysql.exe` (nunca dentro do prompt `mysql>`), e passe `--default-character-set=utf8mb4` na conexão.
 - **Consultas legíveis e ASCII:** evite `SELECT *` em tabelas com hashes longos (`senha_hash`); para saída apenas em ASCII sem estourar o terminal, use `CAST(coluna AS CHAR CHARACTER SET ascii)` ou saída vertical `\G`.
 
-<<<<<<< HEAD
 ### Relatório de Validação: Usuários e Pesquisa de Satisfação (PulseVida)
 
 Este documento consolida os usuários ativos validados no banco de dados (**TiDB Cloud**) e os cenários de resposta da pesquisa de satisfação (`/feedback`), refletindo os ajustes recentes de segurança de ambiente (`.env` e `.env.example`), autenticação (`JWT_SECRET`), conexão em nuvem (`mysqls://` na porta `4000`) e sincronização do branch `main`.
@@ -398,7 +369,3 @@ Consulta executada via `SELECT * FROM pesquisas;` na base `pulsevida` (**TiDB Cl
 | **Banco na Nuvem** | Necessidade de conexão SSL estável e suporte correto a acentuação (`utf8mb4`) | Conexão validada no TiDB Cloud (`mysqls://`, porta `4000`, `utf8mb4`) |
 | **Versionamento Git** | Pastas locais divergentes e risco de commit com segredos | Diretório único padronizado, `git diff` validado e `main` sincronizada |
 | **Operação e Feedback** | Necessidade de validar ponta a ponta o envio e persistência das avaliações | Fluxo `/feedback` testado em produção com 5 avaliações gravadas em `pesquisas` |
-=======
-=======
->>>>>>> marsol/main
->>>>>>> 0661d751b750162f7c6ce9b13ca08381ff0186a0

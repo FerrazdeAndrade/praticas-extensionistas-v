@@ -42,7 +42,6 @@
       <img src="/assets/saquarema.webp" alt="Paisagem da região de Saquarema">
     </section>
   </main>
-<<<<<<< HEAD
   <footer class="footer">
     <div class="container footer-row">
       <div>
@@ -62,81 +61,34 @@
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
-<script defer>
-  function renderQrFallback(container, text, size = 82) {
-    // Gera um padrão matricial determinístico em SVG caso a lib externa não carregue
-    const cells = 21;
-    const cellSize = size / cells;
-    let hash = 2166136261;
-    for (let i = 0; i < text.length; i++) {
-      hash ^= text.charCodeAt(i);
-      hash = Math.imul(hash, 16777619);
-    }
+  <script defer>
+    window.addEventListener('DOMContentLoaded', () => {
+      const target = document.getElementById('pulseQrCode');
+      if (!target) return;
+      const appUrl = window.location.origin || 'https://praticas-extensionistas-v.vercel.app';
+      target.innerHTML = '';
 
-    const rects = [];
-    const isFinder = (r, c) =>
-      (r < 7 && c < 7) || (r < 7 && c >= cells - 7) || (r >= cells - 7 && c < 7);
-
-    const drawFinder = (startR, startC) => {
-      for (let r = 0; r < 7; r++) {
-        for (let c = 0; c < 7; c++) {
-          const border = r === 0 || r === 6 || c === 0 || c === 6;
-          const center = r >= 2 && r <= 4 && c >= 2 && c <= 4;
-          if (border || center) {
-            rects.push(
-              `<rect x="${((startC + c) * cellSize).toFixed(2)}" y="${((startR + r) * cellSize).toFixed(2)}" width="${cellSize.toFixed(2)}" height="${cellSize.toFixed(2)}" fill="#142d4e"/>`
-            );
-          }
-        }
+      if (typeof QRCode !== 'undefined') {
+        new QRCode(target, {
+          text: appUrl,
+          width: 84,
+          height: 84,
+          colorDark: '#142d4e',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+        return;
       }
-    };
 
-    drawFinder(0, 0);
-    drawFinder(0, cells - 7);
-    drawFinder(cells - 7, 0);
-
-    for (let r = 0; r < cells; r++) {
-      for (let c = 0; c < cells; c++) {
-        if (isFinder(r, c)) continue;
-        const bit = ((hash >>> ((r * cells + c) % 24)) ^ (r * 31 + c * 17)) & 1;
-        if (bit) {
-          rects.push(
-            `<rect x="${(c * cellSize).toFixed(2)}" y="${(r * cellSize).toFixed(2)}" width="${cellSize.toFixed(2)}" height="${cellSize.toFixed(2)}" fill="#142d4e"/>`
-          );
-        }
-      }
-    }
-
-    container.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="QR Code">${rects.join('')}</svg>`;
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const target = document.getElementById('pulseQrCode');
-    if (!target) return;
-
-    const appUrl = window.location.origin || 'https://praticas-extensionistas-v.vercel.app';
-    target.innerHTML = '';
-
-    if (typeof QRCode !== 'undefined') {
-      new QRCode(target, {
-        text: appUrl,
-        width: 82,
-        height: 82,
-        colorDark: '#142d4e',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-    } else {
-      renderQrFallback(target, appUrl, 82);
-    }
-  });
-</script>
+      const img = document.createElement('img');
+      img.width = 84;
+      img.height = 84;
+      img.alt = 'QR Code para acessar o PulseVida';
+      img.style.display = 'block';
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=84x84&data=${encodeURIComponent(appUrl)}`;
+      target.appendChild(img);
+    });
+  </script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>
-=======
-  <footer class="footer"><div class="container footer-row"><div><a class="brand" href="/" style="color:white"><img src="/assets/logo_pulsevida.webp" alt=""><span><strong style="color:white">PulseVida</strong><small style="color:#b7c9d9">Cuidado conectado</small></span></a><p>Projeto acadêmico de acompanhamento em saúde · Saquarema, RJ</p></div><div><p><a href="/unidades">Unidades</a> · <a href="/feedback">Pesquisa de satisfação</a> · <a href="/login">Entrar</a></p><p>Este sistema não substitui avaliação profissional nem atendimento de urgência.</p></div></div></footer>
-  <script src="/js/site.js" defer></script>
-</body>
-</html>
->>>>>>> 0661d751b750162f7c6ce9b13ca08381ff0186a0
