@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#142d4e">
+  <meta name="description" content="PulseVida: acompanhe registros de saúde, solicite consultas e mantenha a comunicação com sua equipe de cuidado em Saquarema.">
+  <title>PulseVida — Saúde conectada</title>
+  <link rel="icon" href="/assets/logo_pulsevida.webp" type="image/webp">
+  <link rel="stylesheet" href="/Css/site.css">
+</head>
+<body>
+  <header class="topnav">
+    <a class="brand" href="/" aria-label="PulseVida, página inicial"><img src="/assets/logo_pulsevida.webp" alt=""><span><strong>PulseVida</strong><small>Cuidado conectado</small></span></a>
+    <nav class="toplinks" aria-label="Navegação principal"><a href="#funcionalidades">Como funciona</a><a href="/unidades">Unidades de saúde</a><a href="/feedback">Avalie o sistema</a></nav>
+    <div class="nav-actions"><a class="btn ghost" href="/cadastro">Criar conta</a><a class="btn" href="/login">Entrar</a></div>
+  </header>
+  <main>
+    <section class="container hero">
+      <div>
+        <div class="eyebrow">Saúde conectada em Saquarema</div>
+        <h1>Mais perto do cuidado. No seu ritmo.</h1>
+        <p>O PulseVida ajuda você a registrar aferições, acompanhar solicitações de consulta e organizar informações para conversar com a equipe de saúde.</p>
+        <div class="hero-actions"><a class="btn" href="/cadastro">Criar conta de paciente</a><a class="btn secondary" href="/login">Acessar minha área</a></div>
+        <div class="hero-note"><span aria-hidden="true">✓</span> Seus registros ficam associados à sua conta e podem ser consultados pela equipe autorizada.</div>
+      </div>
+      <div class="hero-image"><img src="/assets/doutora1.webp" alt="Profissional de saúde em ambiente clínico"><div class="hero-tag"><strong>Acompanhamento em um só lugar</strong>Registros, consultas e atendimento</div></div>
+    </section>
+    <section class="container public-section" id="funcionalidades">
+      <div class="section-head"><div class="eyebrow">Uma plataforma para cuidar melhor</div><h2>Informação conectada a cada etapa</h2><p>O sistema organiza os fluxos entre pacientes e serviços de saúde, com áreas diferentes para cada pessoa que utiliza o PulseVida.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card"><div class="feature-icon" aria-hidden="true">♥</div><h3>Acompanhamento pessoal</h3><p>Registre pressão arterial e frequência cardíaca e consulte seu histórico de aferições e atendimentos.</p></article>
+        <article class="feature-card"><div class="feature-icon" aria-hidden="true">▣</div><h3>Consultas organizadas</h3><p>Solicite um horário, acompanhe o status e veja as informações atualizadas pela unidade e pela equipe.</p></article>
+        <article class="feature-card"><div class="feature-icon" aria-hidden="true">✚</div><h3>Equipe de saúde</h3><p>Profissionais acessam a fila de solicitações autorizada e podem registrar atendimentos vinculados ao paciente.</p></article>
+      </div>
+    </section>
+    <section class="container public-section">
+      <div class="safety-banner"><span aria-hidden="true">ⓘ</span><div><strong>Uma ferramenta de apoio, não de diagnóstico.</strong><p>Os registros ajudam a organizar informações e devem ser avaliados por profissionais. Em caso de sintomas graves ou emergência, procure imediatamente um serviço de urgência.</p></div></div>
+    </section>
+    <section class="container public-section about-grid">
+      <div><div class="eyebrow">Sobre o projeto</div><h2 style="font:800 28px Manrope,sans-serif;color:var(--navy);letter-spacing:-.6px;margin:9px 0">Tecnologia a serviço do acompanhamento</h2><p>Desenvolvido como projeto acadêmico com foco em hipertensão e acompanhamento da saúde em Saquarema – RJ, o PulseVida reúne paciente, profissional de saúde e administração em um mesmo fluxo digital.</p><p>A versão de demonstração usa informações fictícias. Não utilize dados clínicos reais neste ambiente.</p><div class="public-actions"><a class="btn secondary" href="/unidades">Ver unidades de saúde</a><a class="btn ghost" href="/feedback">Enviar opinião</a></div></div>
+      <img src="/assets/saquarema.webp" alt="Paisagem da região de Saquarema">
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>
+        <a class="brand" href="/" style="color:white"><img src="/assets/logo_pulsevida.webp" alt=""><span><strong style="color:white">PulseVida</strong><small style="color:#b7c9d9">Cuidado conectado</small></span></a>
+        <p>Projeto acadêmico de acompanhamento em saúde · Saquarema, RJ</p>
+      </div>
+
+      <div id="footerQrBox" class="footer-qr" aria-label="QR Code de acesso ao PulseVida">
+        <div id="pulseQrCode"></div>
+        <span>Acesse pelo celular</span>
+      </div>
+
+      <div>
+        <p><a href="/unidades">Unidades</a> · <a href="/feedback">Pesquisa de satisfação</a> · <a href="/login">Entrar</a></p>
+        <p>Este sistema não substitui avaliação profissional nem atendimento de urgência.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
+<script defer>
+  function renderQrFallback(container, text, size = 82) {
+    // Gera um padrão matricial determinístico em SVG caso a lib externa não carregue
+    const cells = 21;
+    const cellSize = size / cells;
+    let hash = 2166136261;
+    for (let i = 0; i < text.length; i++) {
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+
+    const rects = [];
+    const isFinder = (r, c) =>
+      (r < 7 && c < 7) || (r < 7 && c >= cells - 7) || (r >= cells - 7 && c < 7);
+
+    const drawFinder = (startR, startC) => {
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          const border = r === 0 || r === 6 || c === 0 || c === 6;
+          const center = r >= 2 && r <= 4 && c >= 2 && c <= 4;
+          if (border || center) {
+            rects.push(
+              `<rect x="${((startC + c) * cellSize).toFixed(2)}" y="${((startR + r) * cellSize).toFixed(2)}" width="${cellSize.toFixed(2)}" height="${cellSize.toFixed(2)}" fill="#142d4e"/>`
+            );
+          }
+        }
+      }
+    };
+
+    drawFinder(0, 0);
+    drawFinder(0, cells - 7);
+    drawFinder(cells - 7, 0);
+
+    for (let r = 0; r < cells; r++) {
+      for (let c = 0; c < cells; c++) {
+        if (isFinder(r, c)) continue;
+        const bit = ((hash >>> ((r * cells + c) % 24)) ^ (r * 31 + c * 17)) & 1;
+        if (bit) {
+          rects.push(
+            `<rect x="${(c * cellSize).toFixed(2)}" y="${(r * cellSize).toFixed(2)}" width="${cellSize.toFixed(2)}" height="${cellSize.toFixed(2)}" fill="#142d4e"/>`
+          );
+        }
+      }
+    }
+
+    container.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="QR Code">${rects.join('')}</svg>`;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const target = document.getElementById('pulseQrCode');
+    if (!target) return;
+
+    const appUrl = window.location.origin || 'https://praticas-extensionistas-v.vercel.app';
+    target.innerHTML = '';
+
+    if (typeof QRCode !== 'undefined') {
+      new QRCode(target, {
+        text: appUrl,
+        width: 82,
+        height: 82,
+        colorDark: '#142d4e',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } else {
+      renderQrFallback(target, appUrl, 82);
+    }
+  });
+</script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

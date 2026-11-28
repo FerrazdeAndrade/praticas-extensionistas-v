@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142d4e">
+<title>Avalie o PulseVida</title>
+<link rel="icon" href="/assets/logo_pulsevida.webp" type="image/webp">
+<link rel="stylesheet" href="/Css/site.css">
+</head>
+<body>
+<header class="topnav">
+<a class="brand" href="/">
+<img src="/assets/logo_pulsevida.webp" alt="">
+<span><strong>PulseVida</strong><small>Cuidado conectado</small></span>
+</a>
+<nav class="toplinks">
+<a href="/">Início</a>
+<a href="/unidades">Unidades</a>
+</nav>
+<div class="nav-actions">
+<a class="btn" href="/login">Entrar</a>
+</div>
+</header>
+<main class="page-wrap">
+<div class="page-heading">
+<div class="eyebrow">Sua opinião importa</div>
+<h1>Pesquisa de satisfação</h1>
+<p>Conte como foi sua experiência com o PulseVida. Não inclua informações clínicas ou dados pessoais sensíveis.</p>
+</div>
+<section class="panel">
+<div id="alert" class="alert" role="alert" aria-live="polite"></div>
+<form id="feedbackForm" class="form-grid">
+<div class="field full">
+<label for="nome">Como prefere se identificar? (opcional)</label>
+<input id="nome" maxlength="100" placeholder="Ex.: paciente, profissional, visitante">
+</div>
+<div class="field full">
+<label for="positivo">O que funcionou bem?</label>
+<textarea id="positivo" required minlength="3" maxlength="2000" placeholder="Conte sobre os aspectos positivos da sua experiência."></textarea>
+</div>
+<div class="field full">
+<label for="negativo">Que dificuldade encontrou?</label>
+<textarea id="negativo" required minlength="3" maxlength="2000" placeholder="Descreva algo que podemos melhorar."></textarea>
+</div>
+<div class="field full">
+<label for="sugestoes">Sugestões de melhoria (opcional)</label>
+<textarea id="sugestoes" maxlength="2000" placeholder="Sua sugestão"></textarea>
+</div>
+<div class="form-actions">
+<button class="btn" id="submit" type="submit">Enviar avaliação</button>
+<a class="btn secondary" href="/">Cancelar</a>
+</div>
+</form>
+</section>
+</main>
+<footer class="footer">
+<div class="container footer-row">
+<p>PulseVida · Projeto acadêmico<br>Não inclua dados de saúde nesta pesquisa.</p>
+<a href="/">Voltar ao início</a>
+</div>
+</footer>
+<script src="/js/feedback.js" defer></script>
+<script src="/js/site.js" defer></script>
+</body>
+</html>

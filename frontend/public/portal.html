@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142d4e">
+<meta name="description" content="Área autenticada PulseVida">
+<title>Minha área | PulseVida</title>
+<link rel="icon" href="/assets/logo_pulsevida.webp" type="image/webp">
+<link rel="stylesheet" href="/Css/site.css">
+</head>
+<body>
+<div id="app">
+<div class="loading">Carregando sua área PulseVida…</div>
+</div>
+<dialog id="encounterDialog" class="dialog">
+<form id="encounterForm">
+<h2>Registrar atendimento</h2>
+<p class="dialog-subtitle" id="encounterSubtitle">Registre informações objetivas e necessárias ao acompanhamento.</p>
+<input type="hidden" id="encounterAppointment">
+<div class="field">
+<label for="encounterPressure">Pressão aferida (opcional)</label>
+<input id="encounterPressure" inputmode="numeric" placeholder="120/80" maxlength="7">
+</div>
+<div class="field" style="margin-top:14px">
+<label for="encounterNotes">Observações do atendimento</label>
+<textarea id="encounterNotes" required minlength="3" maxlength="5000" placeholder="Registre observações breves e relevantes para o cuidado."></textarea>
+</div>
+<div class="notice">Registre somente informações necessárias ao atendimento. Não é uma ferramenta de diagnóstico automático.</div>
+<div class="form-actions">
+<button class="btn" id="encounterSubmit" type="submit">Salvar atendimento</button>
+<button class="btn secondary" type="button" id="encounterCancel">Voltar</button>
+</div>
+</form>
+</dialog>
+<script src="/js/portal.js" defer></script>
+</body>
+</html>

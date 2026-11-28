@@ -1,0 +1,33 @@
+{
+  "routes": [
+    { "path": "/", "title": "PulseVida — início" },
+    { "path": "/index.html", "title": "PulseVida — início" },
+    { "path": "/login", "title": "Entrar no PulseVida" },
+    { "path": "/login.html", "title": "Entrar no PulseVida" },
+    { "path": "/cadastro", "title": "Criar conta de paciente" },
+    { "path": "/cadastro.html", "title": "Criar conta de paciente" },
+    { "path": "/tela_cadastro.html", "title": "Criar conta de paciente" },
+    { "path": "/portal/paciente", "title": "Área do paciente" },
+    { "path": "/portal/profissional", "title": "Área do profissional de saúde" },
+    { "path": "/portal/administracao", "title": "Área administrativa" },
+    { "path": "/portal.html", "title": "Portal PulseVida" },
+    { "path": "/portal_paciente.html", "title": "Área do paciente" },
+    { "path": "/portal_profissional.html", "title": "Área do profissional de saúde" },
+    { "path": "/portal_admin.html", "title": "Área administrativa" },
+    { "path": "/feedback", "title": "Pesquisa de satisfação" },
+    { "path": "/feedback.html", "title": "Pesquisa de satisfação" },
+    { "path": "/pesquisa.html", "title": "Pesquisa de satisfação" },
+    { "path": "/feedback/dados", "title": "Feedbacks registrados" },
+    { "path": "/dados_feedback.html", "title": "Feedbacks registrados" },
+    { "path": "/dados_pesquisa.html", "title": "Feedbacks registrados" },
+    { "path": "/unidades", "title": "Unidades de saúde de Saquarema" },
+    { "path": "/unidades.html", "title": "Unidades de saúde de Saquarema" },
+    { "path": "/hospitais_saquarema.html", "title": "Unidades de saúde de Saquarema" },
+    { "path": "/orientacoes", "title": "Orientações gerais de saúde" },
+    { "path": "/orientacoes.html", "title": "Orientações gerais de saúde" },
+    { "path": "/aba_a.html", "title": "Acompanhamento PulseVida" },
+    { "path": "/aba_b.html", "title": "Consultas PulseVida" },
+    { "path": "/aba_c.html", "title": "Agendamentos PulseVida" },
+    { "path": "/aba_d.html", "title": "Orientações gerais de saúde" }
+  ]
+}
